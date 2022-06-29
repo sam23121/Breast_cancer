@@ -1,11 +1,26 @@
 import pandas as pd
 import numpy as np
+import sys
+from log import Logger
 
 class CleanData:
     def __init__(self):
-        pass
+        """Initilize class."""
+        try:
+            pass
+            self.logger = Logger("cleandata.log").get_app_logger()
+            self.logger.info('Successfully Instantiated cleandata Class Object')
+        except Exception:
+            self.logger.exception(
+                'Failed to Instantiate Preprocessing Class Object')
+            sys.exit(1)
+
+    def drop_columns(self, df: pd.DataFrame, col: list)-> pd.DataFrame:
+        df = df.drop(col, axis=1)
+        return df
+    
     #Function to drop columns with zero values
-    def drop_rows(self, df,col1,col2):
+    def drop_rows(self, df, col1, col2):
         df_new= df.drop(df[(df[col1] == 0) & (df[col2] == 0)].index)
         return df_new
     # Calculating skewness of each column 
@@ -49,13 +64,13 @@ class CleanData:
         return df_clean
 
     
-    def detect_outliers_zscore(data):
+    def detect_outliers_zscore(self, df):
         outliers = []
         thres = 3
-        mean = np.mean(data)
-        std = np.std(data)
+        mean = np.mean(df)
+        std = np.std(df)
         # print(mean, std)
-        for i in data:
+        for i in df:
             z_score = (i-mean)/std
             if (np.abs(z_score) > thres):
                 outliers.append(i)

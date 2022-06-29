@@ -1,0 +1,25 @@
+06-28-2022 21:04:56 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-28-2022 21:07:17 : INFO : log : Plotting a histogram
+06-28-2022 21:58:16 : INFO : log : Plotting a heatmap for the dataset: 
+06-29-2022 13:29:37 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-29-2022 13:29:39 : INFO : log : Getting Missing Values from Dataframe
+06-29-2022 14:25:30 : INFO : log : Getting Numerical Columns from Dataframe
+06-29-2022 14:25:48 : INFO : log : Getting Numerical Columns from Dataframe
+06-29-2022 14:26:09 : INFO : log : Getting Numerical Columns from Dataframe
+06-29-2022 14:26:20 : INFO : log : Getting Numerical Columns from Dataframe
+06-29-2022 14:33:40 : INFO : log : Getting Numerical Columns from Dataframe
+06-29-2022 14:43:43 : INFO : log : Plotting a histogram
+06-29-2022 14:56:56 : INFO : log : Successfully Instantiated preprocess Class Object
+06-29-2022 14:56:56 : INFO : log : Successfully Instantiated cleandata Class Object
+06-29-2022 14:56:56 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-29-2022 14:56:56 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-29-2022 14:58:21 : INFO : log : Successfully Instantiated preprocess Class Object
+06-29-2022 14:58:21 : INFO : log : Successfully Instantiated preprocess Class Object
+06-29-2022 14:58:21 : INFO : log : Successfully Instantiated cleandata Class Object
+06-29-2022 14:58:21 : INFO : log : Successfully Instantiated cleandata Class Object
+06-29-2022 14:58:21 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-29-2022 14:58:21 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-29-2022 14:58:21 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-29-2022 15:05:52 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-29-2022 15:06:16 : INFO : log : Plotting a box plot for Column: 
+06-29-2022 17:07:44 : INFO : log : Getting Numerical Columns from Dataframe

@@ -61,3 +61,4 @@ class LoadData:
         """
         
         return pd.read_csv(csv_file)
+        

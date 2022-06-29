@@ -92,7 +92,7 @@ class Plot:
         plt.title(title, size=20)
         plt.xticks(rotation=75, fontsize=14)
         self.logger.info(
-            'Plotting a box plot for Column: ', x_col)
+            'Plotting a box plot for Column: ')
         plt.show()
 
     def plot_box_multi(self, df: pd.DataFrame, x_col: str, y_col: str, title: str) -> None:
