@@ -24,3 +24,6 @@
 06-29-2022 15:05:52 : INFO : log : Successfully Instantiated Preprocessing Class Object
 06-29-2022 15:06:16 : INFO : log : Plotting a box plot for Column: 
 06-29-2022 17:07:44 : INFO : log : Getting Numerical Columns from Dataframe
+06-30-2022 19:36:04 : INFO : log : Successfully Instantiated cleandata Class Object
+06-30-2022 19:36:04 : INFO : log : Successfully Instantiated Preprocessing Class Object
+06-30-2022 19:36:43 : INFO : log : Getting Numerical Columns from Dataframe
