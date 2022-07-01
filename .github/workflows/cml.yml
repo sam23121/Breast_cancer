@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
       - name: Train model
-      - with:
+        with:
           python-version: 3.8.13
         run: |
           # Your ML workflow goes here
