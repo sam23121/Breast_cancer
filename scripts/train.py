@@ -13,39 +13,46 @@ warnings.filterwarnings('ignore')
 from causalnex.structure.notears import from_pandas
 from IPython.display import Image
 from causalnex.plots import plot_structure, NODE_STYLE, EDGE_STYLE
+from causalnex.discretiser.discretiser_strategy import DecisionTreeSupervisedDiscretiserMethod
+from causalnex.network import BayesianNetwork
+from causalnex.evaluation import classification_report
+
+
+
 sys.path.append(os.path.abspath(os.path.join('../scripts')))
+
+from preprocess import Preprocess
+pre = Preprocess()
 
 df = pd.read_csv('../data/16_features.csv', index_col=[0])
 
-le = LabelEncoder()
-df['diagnosis'] = le.fit_transform(df['diagnosis'])
 
-split = int(len(df) * 0.8)
-train = df[:split]
-test = df[split:]
 
-sm = from_pandas(train, tabu_parent_nodes=['diagnosis'])
-sm.remove_edges_below_threshold(0.8)
-viz = plot_structure(
-    sm,
-    graph_attributes={"scale": "2.0", 'size':2.5},
-    all_node_attributes=NODE_STYLE.WEAK,
-    all_edge_attributes=EDGE_STYLE.WEAK)
-filename = "../assets/structure_model.png"
-viz.draw(filename)
-Image(filename)
+def split_data(df):
+    le = LabelEncoder()
+    df['diagnosis'] = le.fit_transform(df['diagnosis'])
+    split = int(len(df) * 0.8)
+    train = df[:split]
+    test = df[split:]
 
-x_frac = train.sample(frac=0.6)
-sm1 = from_pandas(x_frac, tabu_parent_nodes=['diagnosis'])
-sm1.remove_edges_below_threshold(0.8)
-viz = plot_structure(
-    sm1,
-    graph_attributes={"scale": "2.0", 'size':2.5},
-    all_node_attributes=NODE_STYLE.WEAK,
-    all_edge_attributes=EDGE_STYLE.WEAK)
-filename = "../assets/structure_model_new.png"
-viz.draw(filename)
-Image(filename)
+    return train, test
+
+
+
+def plt_structure(train, frac=1, parent_node='diagnosis'):
+    x_frac = train.sample(frac=frac)
+    sm = from_pandas(x_frac, tabu_parent_nodes=[parent_node])
+    sm.remove_edges_below_threshold(0.8)
+    viz = plot_structure(
+        sm,
+        graph_attributes={"scale": "2.0", 'size':2.5},
+        all_node_attributes=NODE_STYLE.WEAK,
+        all_edge_attributes=EDGE_STYLE.WEAK)
+    filename = "../assets/structure_model_new_other.png"
+    viz.draw(filename)
+    Image(filename)
+
+    return sm
 
 def jaccard_similarity(A, B):
     i = set(A).intersection(B)
@@ -53,74 +60,64 @@ def jaccard_similarity(A, B):
     
     return similarity
 
-similarity4 = jaccard_similarity(sm.edges, sm4.edges)
-print(similarity4)
 
-l = list(sm1.edges)
 
-new_sm = sm1.copy()
+def remove_edges(sm):
+    l = list(sm.edges)
+    new_sm = sm.copy()
+    for i in range(len(l)):
+        if l[i][1] != 'diagnosis':
+            new_sm.remove_edge(l[i][0], l[i][1])
 
-for i in range(len(l)):
-    if l[i][1] != 'diagnosis':
-        new_sm.remove_edge(l[i][0], l[i][1])
+    l = list(new_sm.edges)
+    new_col = []
+    for i in range(len(l)):
+        new_col.append(l[i][0])
+    new_col.append(l[1][1])
 
-l = list(new_sm.edges)
+    return new_sm, new_col
 
-col = []
-for i in range(len(l)):
-    col.append(l[i][0])
-col.append(l[1][1])
 
-new_df = df[col]
-split = int(len(new_df) * 0.8)
-train2 = new_df[:split]
-test2 = new_df[split:]
 
-new_sm2 = from_pandas(train2, tabu_parent_nodes=['diagnosis'])
-new_sm2.remove_edges_below_threshold(0.8)
-viz = plot_structure(
-    new_sm2,
-    graph_attributes={"scale": "2.0", 'size':2.5},
-    all_node_attributes=NODE_STYLE.WEAK,
-    all_edge_attributes=EDGE_STYLE.WEAK)
-filename = "../assets/new_structure_model.png"
-viz.draw(filename)
-Image(filename)
 
-for col in features:
-    df[col] = tree_discretiser.transform(df[[col]])
+def discrete(df, parent_node='diagnosis'):
+    features = list(df.columns.difference([parent_node]))
+    tree_discretiser = DecisionTreeSupervisedDiscretiserMethod(
+        mode="single", 
+        tree_params={"max_depth": 2, "random_state": 2021},
+    )
+    tree_discretiser.fit(
+        feat_names=features, 
+        dataframe=df, 
+        target_continuous=True,
+        target=parent_node,
+    )
 
-split = int(len(df) * 0.9)
-train = df[:split]
-test = df[split:]
+    for col in features:
+        df[col] = tree_discretiser.transform(df[[col]])
 
-from causalnex.network import BayesianNetwork
+    return df
 
-bn = BayesianNetwork(sm2)
-bn = bn.fit_node_states(df)
 
-bn = bn.fit_cpds(train, method="BayesianEstimator", bayes_prior="K2")
+def bayesian(sm, df, target='diagnosis'):
+    bn = BayesianNetwork(sm)
+    bn = bn.fit_node_states(df)
+    bn = bn.fit_cpds(train, method="BayesianEstimator", bayes_prior="K2")
+    table = bn.cpds[target]
 
-bn.cpds["diagnosis"]
+    report = classification_report(bn, test, "diagnosis")
 
-from causalnex.evaluation import classification_report
-classification_report(bn, test, "diagnosis")
+    return table, report
 
-for col in features:
-    df[col] = tree_discretiser.transform(df[[col]])
 
-split = int(len(df) * 0.9)
-train = df[:split]
-test = df[split:]
+def compare(sm, sm2):
+    similarity = jaccard_similarity(sm.edges, sm2.edges)
+    return similarity
 
-from causalnex.network import BayesianNetwork
-
-bn = BayesianNetwork(sm2)
-bn = bn.fit_node_states(df)
-
-bn = bn.fit_cpds(train, method="BayesianEstimator", bayes_prior="K2")
-
-bn.cpds["diagnosis"]
-
-from causalnex.evaluation import classification_report
-classification_report(bn, test, "diagnosis")
+train, test = split_data(df)
+sm = plt_structure(train, frac=1, parent_node='diagnosis')
+new_sm, new_col = remove_edges(sm)
+new_df = df[new_col]
+df = discrete(df, parent_node='diagnosis')
+table , report bayesian(sm, df)
+similarity = compare(sm, sm2)
