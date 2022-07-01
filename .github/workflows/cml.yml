@@ -16,7 +16,7 @@ jobs:
       - name: Train model
         run: |
           # Your ML workflow goes here
-          pip install -r requirements.txt
+          sudo -H pip install -r requirements.txt
           python scripts/train.py
       - name: Write CML report
         env:
