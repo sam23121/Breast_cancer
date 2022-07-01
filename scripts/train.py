@@ -23,14 +23,13 @@ sys.path.append(os.path.abspath(os.path.join('../scripts')))
 from preprocess import Preprocess
 pre = Preprocess()
 
-df = pd.read_csv('../data/16_features.csv', index_col=[0])
 
 
 
 def split_data(df):
     le = LabelEncoder()
     df['diagnosis'] = le.fit_transform(df['diagnosis'])
-    split = int(len(df) * 0.8)
+    split = int(len(df) * 0.7)
     train = df[:split]
     test = df[split:]
 
@@ -80,6 +79,8 @@ def remove_edges(sm):
 
 
 def discrete(df, parent_node='diagnosis'):
+    le = LabelEncoder()
+    df['diagnosis'] = le.fit_transform(df['diagnosis'])
     features = list(df.columns.difference([parent_node]))
     tree_discretiser = DecisionTreeSupervisedDiscretiserMethod(
         mode="single", 
@@ -115,15 +116,23 @@ def compare(sm, sm2):
     return similarity
 
 
-train, test = split_data(df)
-sm = plt_structure(train, frac=1, parent_node='diagnosis')
-sm2 = plt_structure(train, frac=0.7, parent_node='diagnosis')
-similarity = compare(sm, sm2)
-new_sm, new_col = remove_edges(sm)
-new_df = df[new_col]
-train2, test2 = split_data(new_df)
-new_sm = plt_structure(train2, frac=1, parent_node='diagnosis')
 
 
-df = discrete(df, parent_node='diagnosis')
-table1 , report1 = bayesian(sm1, df)
+if __name__ == "__main__":
+    df = pd.read_csv('../data/16_features.csv', index_col=[0])
+    train, test = split_data(df)
+    sm = plt_structure(train, frac=0.6, parent_node='diagnosis')
+    # sm2 = plt_structure(train, frac=0.7, parent_node='diagnosis')
+    # similarity = compare(sm, sm2)
+    # new_sm, new_col = remove_edges(sm)
+    # new_df = df[new_col]
+    # train2, test2 = split_data(new_df)
+    # new_sm = plt_structure(train2, frac=1, parent_node='diagnosis')
+
+
+    df = discrete(df, parent_node='diagnosis')
+    table1 , report1 = bayesian(sm, df)
+    # print(table1)
+    with open("../metrics.txt", 'w') as outfile:
+            outfile.write(table1)
+            outfile.write(report1)
