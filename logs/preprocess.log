@@ -55,3 +55,7 @@
 06-30-2022 19:36:04 : INFO : log : Successfully Instantiated cleandata Class Object
 06-30-2022 19:36:04 : INFO : log : Successfully Instantiated Preprocessing Class Object
 06-30-2022 19:36:43 : INFO : log : Getting Numerical Columns from Dataframe
+07-01-2022 17:12:12 : INFO : log : Successfully Instantiated preprocess Class Object
+07-01-2022 17:13:32 : INFO : log : Successfully Instantiated preprocess Class Object
+07-01-2022 17:14:46 : INFO : log : Successfully Instantiated preprocess Class Object
+07-01-2022 17:20:59 : INFO : log : Successfully Instantiated preprocess Class Object
