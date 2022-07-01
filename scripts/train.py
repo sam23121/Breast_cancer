@@ -17,9 +17,8 @@ from causalnex.discretiser.discretiser_strategy import DecisionTreeSupervisedDis
 from causalnex.network import BayesianNetwork
 from causalnex.evaluation import classification_report
 
-
-
 sys.path.append(os.path.abspath(os.path.join('../scripts')))
+
 
 from preprocess import Preprocess
 pre = Preprocess()
@@ -102,6 +101,7 @@ def discrete(df, parent_node='diagnosis'):
 def bayesian(sm, df, target='diagnosis'):
     bn = BayesianNetwork(sm)
     bn = bn.fit_node_states(df)
+    train, test = split_data(df)
     bn = bn.fit_cpds(train, method="BayesianEstimator", bayes_prior="K2")
     table = bn.cpds[target]
 
@@ -114,10 +114,16 @@ def compare(sm, sm2):
     similarity = jaccard_similarity(sm.edges, sm2.edges)
     return similarity
 
+
 train, test = split_data(df)
 sm = plt_structure(train, frac=1, parent_node='diagnosis')
+sm2 = plt_structure(train, frac=0.7, parent_node='diagnosis')
+similarity = compare(sm, sm2)
 new_sm, new_col = remove_edges(sm)
 new_df = df[new_col]
+train2, test2 = split_data(new_df)
+new_sm = plt_structure(train2, frac=1, parent_node='diagnosis')
+
+
 df = discrete(df, parent_node='diagnosis')
-table , report bayesian(sm, df)
-similarity = compare(sm, sm2)
+table1 , report1 = bayesian(sm1, df)
