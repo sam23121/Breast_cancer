@@ -53,7 +53,7 @@ def createTables(dbName: str) -> None:
     -------
     """
     conn, cur = DBConnect(dbName)
-    sqlFile = r'C:\Users\sam\Desktop\Telecommunication_data_analysis\scripts\score_schema.sql'
+    sqlFile = 'score_schema.sql'
     fd = open(sqlFile, 'r')
     readSqlFile = fd.read()
     fd.close()
@@ -180,10 +180,10 @@ def db_execute_fetch(*args, many=False, tablename='', rdf=True, **kwargs) -> pd.
 
 
 if __name__ == "__main__":
-    createDB(dbName='score')
-    emojiDB(dbName='score')
-    createTables(dbName='score')
+    createDB(dbName='breast_cancer')
+    emojiDB(dbName='breast_cancer')
+    createTables(dbName='breast_cancer')
 
-    df = pd.read_csv(r'C:\Users\sam\Desktop\Telecommunication_data_analysis\data\all_scores.csv')
+    df = pd.read_csv('../data/16_features.csv', index_col=[0])
 
-    insert_to_table(dbName='score', df=df, table_name='ScoreInformation')
+    insert_to_table(dbName='breast_cancer', df=df, table_name='bc')
