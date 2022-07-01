@@ -53,7 +53,7 @@ def createTables(dbName: str) -> None:
     -------
     """
     conn, cur = DBConnect(dbName)
-    sqlFile = 'score_schema.sql'
+    sqlFile = 'bc_schema.sql'
     fd = open(sqlFile, 'r')
     readSqlFile = fd.read()
     fd.close()

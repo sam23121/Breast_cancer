@@ -2,7 +2,7 @@
 import sys
 import os
 from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 
 import warnings
 warnings.filterwarnings('ignore')
