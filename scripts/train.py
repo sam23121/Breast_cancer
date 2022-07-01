@@ -1,7 +1,6 @@
 # import pandas as pd
 import sys
 import os
-import matplotlib.pyplot as plt 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
@@ -18,8 +17,6 @@ from causalnex.evaluation import classification_report
 sys.path.append(os.path.abspath(os.path.join('../scripts')))
 
 
-from preprocess import Preprocess
-pre = Preprocess()
 
 
 
