@@ -17,15 +17,16 @@ jobs:
         run: |
           # Your ML workflow goes here
           python -m pip install --upgrade pip
-          pip install -r requirements.txt 
-      - name: Write CML report
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python scripts/train.py
-          # Post reports as comments in GitHub PRs
-          echo '# model metrics RandomForest' > report.md
-          cat metrics.txt >> report.md
-          # echo "## Data viz" >> report.md
-          # cml-publish residuals_for_logesticregression.png --md >> report.md
-          cml-send-comment report.md
+          python -m pip install -r requirements.txt 
+          python -c "import sys; print('\n'.join(sys.path))"
+      # - name: Write CML report
+      #   env:
+      #     REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     # python scripts/train.py
+      #     # Post reports as comments in GitHub PRs
+      #     echo '# model metrics RandomForest' > report.md
+      #     cat metrics.txt >> report.md
+      #     # echo "## Data viz" >> report.md
+      #     # cml-publish residuals_for_logesticregression.png --md >> report.md
+      #     cml-send-comment report.md
