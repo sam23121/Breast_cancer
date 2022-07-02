@@ -128,8 +128,8 @@ if __name__ == "__main__":
     df = discrete(df, parent_node='diagnosis')
     table1 , report1 = bayesian(sm, df)
     # print(table1)
-    df2 = pd.read_json(table1)
-    df2.to_csv('metrics.txt', index=False)
+    # df2 = pd.read_json(table1)
+    # df2.to_csv('metrics.txt', index=False)
     # with open("metrics.txt", 'w') as outfile:
     #         # outfile.write(table1)
     #         outfile.write(report1)

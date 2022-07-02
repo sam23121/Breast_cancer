@@ -32,8 +32,8 @@ jobs:
         run: |
           python scripts/train.py
           # Post reports as comments in GitHub PRs
-          echo '# model metrics RandomForest' > report.md
-          cat metrics.txt >> report.md
-          # echo "## Data viz" >> report.md
-          # cml-publish residuals_for_logesticregression.png --md >> report.md
+          # echo '# model metrics RandomForest' > report.md
+          # cat metrics.txt >> report.md
+          echo "## Data viz" >> report.md
+          cml-publish structure_model_new_other.png --md > report.md
           cml-send-comment report.md
