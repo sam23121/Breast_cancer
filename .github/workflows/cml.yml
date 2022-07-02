@@ -1,0 +1,39 @@
+name: causal
+on: [push]
+jobs:
+  run:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    # optionally use a convenient Ubuntu LTS + DVC + CML image
+    container: docker://ghcr.io/iterative/cml:0-dvc2-base1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - uses: ts-graphviz/setup-graphviz@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          # cache: 'pip'
+      - name: Train model
+        # env:
+        #   GDRIVE_CREDENTIALS_DATA: ${{ secrets.ORIGINAL_SERVICE_ACCOUNT_JSON }}
+        run: |
+          # Your ML workflow goes here
+          python -m pip install --upgrade pip
+          # sudo apt-get install graphviz graphviz-dev
+          python -m pip install -r requirements.txt 
+          # python -c "import sys; print('\n'.join(sys.path))"
+          # pip install dvc[gdrive]
+          # dvc pull 
+          # dvc repro
+      - name: Write CML report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/train.py
+          # Post reports as comments in GitHub PRs
+          # echo '# model metrics RandomForest' > report.md
+          # cat metrics.txt >> report.md
+          echo "## Data viz" >> report.md
+          cml-publish assets/structure_model_new_other.png --md > report.md
+          cml-send-comment report.md
