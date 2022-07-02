@@ -30,14 +30,17 @@ the following tasks has been done on the Breas cancer dataset found on kaggle
 - CI/CD
 
 ## Setup
-`git clone ` 
-`pip install -r requirements.txt`
-`python scripts/train.py`
+```
+git clone https://github.com/sam23121/Breast_cancer.git
+pip install -r requirements.txt
+python scripts/train.py
+```
 
 ## Code Examples
-`from causal import Causal`
-`sm = Causal.plt_structure(df,  frac=1, parent_node='diagnosis')`
-
+```
+from causal import Causal
+sm = Causal.plt_structure(df,  frac=1, parent_node='diagnosis')
+```
 ## Features
 * an easy to use class to replicate for similar tasks
 
