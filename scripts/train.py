@@ -41,7 +41,7 @@ def plt_structure(train, frac=1, parent_node='diagnosis'):
         graph_attributes={"scale": "2.0", 'size':2.5},
         all_node_attributes=NODE_STYLE.WEAK,
         all_edge_attributes=EDGE_STYLE.WEAK)
-    filename = "../assets/structure_model_new_other.png"
+    filename = "assets/structure_model_new_other.png"
     viz.draw(filename)
     Image(filename)
 
@@ -128,6 +128,6 @@ if __name__ == "__main__":
     df = discrete(df, parent_node='diagnosis')
     table1 , report1 = bayesian(sm, df)
     # print(table1)
-    with open("../metrics.txt", 'w') as outfile:
+    with open("metrics.txt", 'w') as outfile:
             outfile.write(table1)
             outfile.write(report1)
