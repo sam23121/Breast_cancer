@@ -22,8 +22,7 @@ jobs:
           python -m pip install -r requirements.txt 
           # python -c "import sys; print('\n'.join(sys.path))"
           pip install dvc[gdrive]
-          dvc remote modify filterout --local gdrive_service_account_json_file_path /dev/null
-          dvc pull -r filterout --verbose
+          dvc pull 
           dvc repro
       - name: Write CML report
         env:
