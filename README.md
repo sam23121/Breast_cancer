@@ -23,26 +23,29 @@ the following tasks has been done on the Breas cancer dataset found on kaggle
 - Merge machine learning with causal inference;?
 
 ## Screenshots
+![structure model](./assets/structure_model_new.png)
 
 ## Technologies
-
+- dvc
+- CI/CD
 
 ## Setup
-Describe how to install / setup your local environement / add link to demo version.
+`git clone ` 
+`pip install -r requirements.txt`
+`python scripts/train.py`
 
 ## Code Examples
-Show examples of usage:
-`put-your-code-here`
+`from causal import Causal`
+`sm = Causal.plt_structure(df,  frac=1, parent_node='diagnosis')`
 
 ## Features
-List of features ready and TODOs for future development
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
+* an easy to use class to replicate for similar tasks
+
 
 To-do list:
-* Wow improvement to be done 1
-* Wow improvement to be done 2
+* make it an end to end workflow
+* adding GUI so users (especially domain experts) can interact with it
+* able to work for any dataset
 
 ## Status
 Project is: _in progress_, 
