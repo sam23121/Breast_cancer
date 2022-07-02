@@ -19,6 +19,8 @@ jobs:
         run: |
           # Your ML workflow goes here
           python -m pip install --upgrade pip
+          apt-get install graphviz graphviz-dev
+          pip install pygraphviz
           python -m pip install -r requirements.txt 
           # python -c "import sys; print('\n'.join(sys.path))"
           # pip install dvc[gdrive]
