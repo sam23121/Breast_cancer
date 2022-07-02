@@ -35,5 +35,5 @@ jobs:
           # echo '# model metrics RandomForest' > report.md
           # cat metrics.txt >> report.md
           echo "## Data viz" >> report.md
-          cml-publish structure_model_new_other.png --md > report.md
+          cml-publish assets/structure_model_new_other.png --md > report.md
           cml-send-comment report.md
