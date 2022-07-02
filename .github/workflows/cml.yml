@@ -5,24 +5,18 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     # optionally use a convenient Ubuntu LTS + DVC + CML image
-    strategy:
-      matrix:
-        python-version: ["3.7", "3.8"]
     container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
-      # - uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.6' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-      #     architecture: 'x64'
+          python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64'
       - name: Train model
         run: |
           # Your ML workflow goes here
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
           python scripts/train.py
       - name: Write CML report
