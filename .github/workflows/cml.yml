@@ -14,16 +14,16 @@ jobs:
           python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           # cache: 'pip'
       - name: Train model
-        env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.ORIGINAL_SERVICE_ACCOUNT_JSON }}
+        # env:
+        #   GDRIVE_CREDENTIALS_DATA: ${{ secrets.ORIGINAL_SERVICE_ACCOUNT_JSON }}
         run: |
           # Your ML workflow goes here
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt 
           # python -c "import sys; print('\n'.join(sys.path))"
-          pip install dvc[gdrive]
-          dvc pull 
-          dvc repro
+          # pip install dvc[gdrive]
+          # dvc pull 
+          # dvc repro
       - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
