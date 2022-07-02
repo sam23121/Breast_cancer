@@ -114,7 +114,7 @@ def compare(sm, sm2):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv('../data/16_features.csv', index_col=[0])
+    df = pd.read_csv('data/16_features.csv', index_col=[0])
     train, test = split_data(df)
     sm = plt_structure(train, frac=0.6, parent_node='diagnosis')
     # sm2 = plt_structure(train, frac=0.7, parent_node='diagnosis')
