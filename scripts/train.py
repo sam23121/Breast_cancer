@@ -129,5 +129,5 @@ if __name__ == "__main__":
     table1 , report1 = bayesian(sm, df)
     # print(table1)
     with open("metrics.txt", 'w') as outfile:
-            outfile.write(table1)
+            # outfile.write(table1)
             outfile.write(report1)
