@@ -122,8 +122,23 @@ def insert_to_table(dbName: str, df: pd.DataFrame, table_name: str) -> None:
     df = df.astype(object).where(pd.notnull(df), None)
 
     for _, row in df.iterrows():
-        sqlQuery = f"""INSERT INTO {table_name} (experience_score, engagement_score, satisfaction_score)
-             VALUES(%s, %s, %s);"""
+        sqlQuery = f"""INSERT INTO {table_name} (`diagnosis`  `radius_mean` ,
+    `texture_mean` ,
+    `perimeter_mean` ,
+    `area_mean` ,
+    `concavity_mean` ,
+    `concave points_mean` ,
+    `area_se` ,
+    `radius_worst` ,
+    `texture_worst` ,
+    `perimeter_worst` ,
+    `area_worst` ,
+    `smoothness_worst` ,
+    `compactness_worst` ,
+    `concavity_worst` ,
+    `concave points_worst` ,
+    `symmetry_worst`)
+             VALUES(%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s,%s, %s, %s);"""
         data = (row[0], row[1], row[2])
 
         try:

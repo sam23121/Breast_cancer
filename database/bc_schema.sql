@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `bc` 
 (
     `user_id` INT NOT NULL AUTO_INCREMENT,
-    `CHAR` float NOT NULL,
+    `diagnosis` CHAR NOT NULL,
     `radius_mean` float NOT NULL,
     `texture_mean` float NOT NULL,
     `perimeter_mean` float NOT NULL,
